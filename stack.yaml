@@ -1,0 +1,6 @@
+resolver: nightly-2020-10-10
+packages:
+- .
+nix:
+  packages: [zlib]
+  enable: false

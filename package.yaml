@@ -1,0 +1,24 @@
+name:                unliftio-path
+version:             0.0.1.0
+license:             MIT
+category:            Text
+author:              "Daniel Firth"
+maintainer:          "dan.firth@homotopic.tech"
+copyright:           "2020 Daniel Firth"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+synopsis:            UnliftIO using well-typed Paths.
+description:         UnliftIO using well-typed Paths.
+
+dependencies:
+- base >= 4.7 && < 5
+- exceptions
+- path
+- time
+- unliftio
+
+library:
+  source-dirs: src
