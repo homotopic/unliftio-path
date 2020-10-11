@@ -86,21 +86,20 @@ removePathForcibly = UnliftIO.Directory.removePathForcibly . toFilePath
 renameDirectory :: MonadIO m => Path b Dir -> Path b' Dir -> m ()
 renameDirectory x y = UnliftIO.Directory.renameDirectory (toFilePath x) (toFilePath y)
 
--- Lifted `UnliftIO.Directory.listDirectory`.
-listDirectory :: (MonadThrow m, MonadIO m) => Path b Dir -> m ([Path Rel Dir], [Path Rel File])
-listDirectory d = do
+getDirectoryContents_ :: (MonadThrow m, MonadIO m) => Path b Dir -> m ([Path Rel Dir], [Path Rel File])
+getDirectoryContents_ d = do
   xs   <- UnliftIO.Directory.listDirectory . toFilePath $ d
   dirs <- mapM parseRelDir =<< filterM UnliftIO.Directory.doesDirectoryExist xs
   fils <- mapM parseRelFile =<< filterM UnliftIO.Directory.doesFileExist xs
   return (dirs, fils)
 
+-- Lifted `UnliftIO.Directory.listDirectory`.
+listDirectory :: (MonadThrow m, MonadIO m) => Path b Dir -> m ([Path Rel Dir], [Path Rel File])
+listDirectory = getDirectoryContents_
+
 -- Lifted `UnliftIO.Directory.getDirectoryContents`.
 getDirectoryContents :: (MonadThrow m, MonadIO m) => Path b Dir -> m ([Path Rel Dir], [Path Rel File])
-getDirectoryContents d = do
-  xs   <- UnliftIO.Directory.listDirectory . toFilePath $ d
-  dirs <- mapM parseRelDir =<< filterM UnliftIO.Directory.doesDirectoryExist xs
-  fils <- mapM parseRelFile =<< filterM UnliftIO.Directory.doesFileExist xs
-  return (dirs, fils)
+getDirectoryContents = getDirectoryContents_
 
 -- Lifted `UnliftIO.Directory.getCurrentDirectory`.
 getCurrentDirectory :: (MonadThrow m, MonadIO m) => m (Path Abs Dir)
