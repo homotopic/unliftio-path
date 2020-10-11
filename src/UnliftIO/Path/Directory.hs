@@ -25,8 +25,13 @@ module UnliftIO.Path.Directory (
 , getTemporaryDirectory
 , removeFile
 , renameFile
+, renamePath
 , copyFile
 , copyFileWithMetadata
+, makeAbsoluteDir
+, makeAbsoluteFile
+, makeRelativeToCurrentDirectoryDir
+, makeRelativeToCurrentDirectoryFile
 , findExecutable
 , findExecutables
 , UnliftIO.Directory.exeExtension
